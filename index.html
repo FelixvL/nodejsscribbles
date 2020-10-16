@@ -1,0 +1,42 @@
+<html>
+	<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script>
+		$(document).ready(function(){
+  $("p").click(function(){
+    $(this).hide();
+  });
+$("button").click(function(){
+var settings = {
+          'cache': false,
+          "async": true,
+          "url": "http://localhost:8080",
+          "method": "GET",
+      }
+
+      $.ajax(settings).done(function (response) {
+          alert(response);
+
+      });
+});
+});
+
+
+	function go(){
+			var xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function (){
+				alert("yes"+this.responseText);
+			}
+			xhr.open("GET", "http://localhost:8080",true);
+			xhr.send();
+		}
+		</script>
+	</head>
+	<body>
+		<div onclick=go()>go</div>
+		<p>dit is een p</p>
+		<button >hoi in button</button>
+	</body>
+
+
+</html>
