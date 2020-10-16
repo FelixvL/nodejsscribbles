@@ -6,27 +6,34 @@ var con = mysql.createConnection({
 	user: "root",
 	password: "root",
 	database: "abc"
-  });
+});
 
-
-var uc = require('upper-case');
+getEmployeeNames = function () {
+	return new Promise(function (resolve, reject) {
+		con.query(
+			"SELECT * FROM boot",
+			function (err, rows) {
+				if (rows === undefined) {
+					reject(new Error("Error rows is undefined"));
+				} else {
+					resolve(rows);
+				}
+			}
+		)
+	}
+	)
+}
 http.createServer(function (req, res) {
 	res.setHeader("Access-Control-Allow-Origin", "*");
-  	res.writeHead(200, {'Content-Type': 'text/html'});
-  	res.write(hetWoordOpmaken(req.url));
-  	res.end();
-}).listen(8080);
-
-function hetWoordOpmaken(deurl){
-	con.connect(function(err) {
-		if (err) throw err;
-		console.log("Connected!");
-		var sql = "SELECT * FROM boot";
-		con.query(sql, function (err, result) {
-		  if (err) throw err;
-		  console.log("sql done");
-		  console.log(JSON.stringify(result));
-		});
-	});
-	return "denk connected";
-}
+	res.setHeader('Content-type', 'text/html');
+	getEmployeeNames()
+		.then(function (results) {
+			html = '';
+			for (var i in results) html += "<div>" + results[i].naam + " - " + results[i].kapitein + "</div>";
+			res.end(html);
+		})
+		.catch(function (err) {
+			console.log("Promise rejection error: " + err);
+			res.end("<h1>ERROR</h1>")
+		})
+}).listen(8080)

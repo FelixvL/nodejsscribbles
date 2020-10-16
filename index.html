@@ -8,8 +8,8 @@
 				$(this).hide();
 			});
 			$("button").click(function () {
-				$.get("http://localhost:8080/vraagje/extra", function (data, status) {
-					alert("Data: " + data + "\nStatus: " + status);
+				$.get("http://localhost:8080/", function (data, status) {
+					$('#uitkomst').html(data);
 				});
 			});
 		});
@@ -30,6 +30,7 @@
 	<div onclick=go()>go</div>
 	<p>dit is een p</p>
 	<button>hoi in button</button>
+	<div id=uitkomst > uitkomst </div>
 </body>
 
 
