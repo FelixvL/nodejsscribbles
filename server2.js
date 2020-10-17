@@ -1,8 +1,8 @@
-var express = require('express');
-var mysql = require('mysql');
-var cors = require('cors')
+let express = require('express');
+let mysql = require('mysql');
+let cors = require('cors')
 
-var con = mysql.createConnection({
+let con = mysql.createConnection({
 	host: "localhost",
 	user: "root",
 	password: "root",
@@ -12,8 +12,7 @@ var con = mysql.createConnection({
 const app = express();
 app.use(cors());
 
-
-getEmployeeNames = function () {
+let getEmployeeNames = function () {
 	return new Promise(function (resolve, reject) {
 		con.query(
 			"SELECT * FROM boot",
@@ -23,18 +22,18 @@ getEmployeeNames = function () {
 				} else {
 					resolve(rows);
 				}
-			}
-		)
-	}
-	)
+			})
+	})
 }
+
+checkAlles = () => { return new Promise((resolve, reject)=>{ con.query('SELECT * FROM boot',(err, rows)=>{ resolve(rows);})})}
+app.get('/abc',(req,res)=>{ checkAlles().then((results)=>{let html = '';for(let x in results)html+= results[x].naam+"<br>"; res.end(html)})});
 
 app.get( '/', (req, res) => {
 	res.send('yep it is');
 });
 
-app.get( '/uitdb' , (req, res) => {
-	
+app.get( '/uitdb' , (req, res) => {	
 	getEmployeeNames()
 	.then(function (results) {
 		html = '';
@@ -47,5 +46,6 @@ app.get( '/uitdb' , (req, res) => {
 	})
 
 });
+
 
 app.listen(8080);
