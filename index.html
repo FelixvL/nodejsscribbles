@@ -7,7 +7,7 @@
 			$("p").click(function () {
 				$(this).hide();
 			});
-			$("button").click(function () {
+			$("button#special").click(function () {
 				$.get("http://localhost:8080/", function (data, status) {
 					$('#uitkomst').html(data);
 				});
@@ -23,14 +23,24 @@
 			xhr.open("GET", "http://localhost:8080", true);
 			xhr.send();
 		}
+		function checkit() {
+			var xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function () {
+				alert("yes" + this.responseText);
+			}
+			xhr.open("GET", "http://localhost:8080/uitdb", true);
+			xhr.send();
+		}
 	</script>
 </head>
 
 <body>
 	<div onclick=go()>go</div>
 	<p>dit is een p</p>
-	<button>hoi in button</button>
+	<button id=special>hoi in button</button>
 	<div id=uitkomst > uitkomst </div>
+	<hr><hr>
+	<button onclick=checkit()>go to db</button>
 </body>
 
 
