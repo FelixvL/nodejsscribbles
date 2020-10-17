@@ -31,6 +31,19 @@
 			xhr.open("GET", "http://localhost:8080/uitdb", true);
 			xhr.send();
 		}
+		function opslaan() {
+			var xhr = new XMLHttpRequest();
+			var boot = {};
+			boot.naam = document.getElementById("naam").value;
+			boot.kapitein = document.getElementById("kapitein").value;
+			boot.lengte = document.getElementById("lengte").value;
+			xhr.onreadystatechange = function () {
+				alert("opgelagen?" + this.responseText);
+			}
+			xhr.open("POST", "http://localhost:8080/opslaan", true);
+			xhr.setRequestHeader("Content-Type","application/json");
+			xhr.send(JSON.stringify(boot));
+		}
 	</script>
 </head>
 
@@ -41,6 +54,10 @@
 	<div id=uitkomst > uitkomst </div>
 	<hr><hr>
 	<button onclick=checkit()>go to db</button>
+	<hr><hr>
+	<input type=text id=naam><input type=text id=kapitein><input type=text id=lengte>
+	<button onclick=opslaan()>go to db</button>
+	
 </body>
 
 
